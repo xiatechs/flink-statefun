@@ -28,9 +28,10 @@ import java.util.Properties;
 public class PubSubIngressSpec<T> implements IngressSpec<T> {
     private final Properties properties;
     private final String projectName;
-    private String subscriptionName;
+    private final String subscriptionName;
 
-    private Credentials credentials;
+    private final Credentials credentials;
+
     private final IngressIdentifier<T> ingressIdentifier;
 
     PubSubIngressSpec(
