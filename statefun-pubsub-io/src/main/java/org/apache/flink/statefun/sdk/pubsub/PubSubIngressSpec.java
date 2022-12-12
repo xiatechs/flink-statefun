@@ -29,8 +29,8 @@ public class PubSubIngressSpec<T> implements IngressSpec<T> {
     private final Properties properties;
     private final String projectName;
     private final String subscriptionName;
-
     private final Credentials credentials;
+    private final PubSubIngressDeserializer<T> deserializer;
 
     private final IngressIdentifier<T> ingressIdentifier;
 
@@ -39,11 +39,12 @@ public class PubSubIngressSpec<T> implements IngressSpec<T> {
             Properties properties,
             String projectName,
             String subscriptionName,
+            PubSubIngressDeserializer<T> deserializer,
             Credentials credentials) {
         this.properties = requireValidProperties(properties);
         this.projectName = projectName;
         this.subscriptionName = subscriptionName;
-
+        this.deserializer = Objects.requireNonNull(deserializer);
         this.credentials = credentials;
         this.ingressIdentifier = Objects.requireNonNull(id);
     }
@@ -72,6 +73,10 @@ public class PubSubIngressSpec<T> implements IngressSpec<T> {
 
     public String subscriptionName() {
         return subscriptionName;
+    }
+
+    public PubSubIngressDeserializer<T> deserializer() {
+        return deserializer;
     }
 
     // TODO: Work out what required properties should go here
