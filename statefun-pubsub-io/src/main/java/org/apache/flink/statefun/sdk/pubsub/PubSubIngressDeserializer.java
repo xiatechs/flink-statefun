@@ -22,7 +22,7 @@ import com.google.pubsub.v1.PubsubMessage;
 import java.io.Serializable;
 
 /**
- * The deserialization schema describes how to turn the Kafka ConsumerRecords into data types that
+ * The deserialization schema describes how to turn the PubSub message into data types that
  * are processed by the system.
  *
  * @param <T> The type created by the keyed deserialization schema.
@@ -30,7 +30,7 @@ import java.io.Serializable;
 public interface PubSubIngressDeserializer<T> extends Serializable {
 
   /**
-   * Deserializes the Kafka record.
+   * Deserializes the PubSub record.
    *
    * @param message PubSub message to be deserialized.
    * @return The deserialized message as an object (null if the message cannot be deserialized).

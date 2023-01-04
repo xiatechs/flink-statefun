@@ -54,9 +54,12 @@ public final class PubSubIngressBuilder<T> {
 
   /**
    * @param id A unique ingress identifier.
-   * @param <T> The type consumed from Kafka.
-   * @return A new {@link KafkaIngressBuilder}.
+   * @param <T> The type consumed from PubSub.
+   * @return A new {@link PubSubIngressBuilder}.
    */
+  public static <T> PubSubIngressBuilder<T> forIdentifier(IngressIdentifier<T> id) {
+    return new PubSubIngressBuilder<>(id);
+  }
 
   /** @param projectName the consumer group id to use. */
   public PubSubIngressBuilder<T> withProjectName(String projectName) {
@@ -76,7 +79,7 @@ public final class PubSubIngressBuilder<T> {
     return this;
   }
 
-  /** A configuration property for the KafkaConsumer. */
+  /** A configuration property for the PubSubConsumer. */
   public PubSubIngressBuilder<T> withProperties(Properties properties) {
     this.properties.putAll(properties);
     return this;
@@ -87,7 +90,7 @@ public final class PubSubIngressBuilder<T> {
     return this;
   }
 
-  /** A configuration property for the KafkaProducer. */
+  /** A configuration property for the PubSubProducer. */
   public PubSubIngressBuilder<T> withProperty(String name, String value) {
     Objects.requireNonNull(name);
     Objects.requireNonNull(value);
@@ -96,7 +99,7 @@ public final class PubSubIngressBuilder<T> {
   }
 
   /**
-   * @param deserializerClass The deserializer used to convert between Kafka's byte messages and
+   * @param deserializerClass The deserializer used to convert between PubSubs byte messages and
    *     java objects.
    */
   public PubSubIngressBuilder<T> withDeserializer(
@@ -113,7 +116,7 @@ public final class PubSubIngressBuilder<T> {
         // No hostAndPort is the normal scenario, so we use the default credentials.
         credentials = defaultCredentialsProviderBuilder().build().getCredentials();
       } else {
-        // With hostAndPort the PubSub emulator is used so we do not have credentials.
+        // With hostAndPort the PubSub emulator is used, so we do not have credentials.
         credentials = EmulatorCredentials.getInstance();
       }
     }
